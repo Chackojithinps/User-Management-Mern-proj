@@ -57,20 +57,19 @@ const userLogin = async (req,res)=>{
 
     const token = jwt.sign({id:isUserExists._id,userName:isUserExists.fname},JWT_SECRET_KEY,{expiresIn:"2hr"})
 
-    // res.cookie("jwt",token,{
-    //     path:'/',
-    //     expiresIn:new Date(Date.now()+1000*30),
-    //     httpOnly:true,
-    //     sameSite:"lax"
-    // })
-    res.cookie("jwt", token , {
-        httpOnly: false,
-        maxAge: 6000 * 1000,
-        secure:false
+    res.cookie("jwt",token,{
+        path:'/',
+        expiresIn:new Date(Date.now()+1000*30),
+        httpOnly:true,
+        sameSite:"lax"
     })
+    // res.cookie("jwt", token , {
+    //     httpOnly: false,
+    //     maxAge: 6000 * 1000,
+    //     secure:false
+    // })
         
     return res.status(200).json({message:"Successfully loggedin",user:isUserExists,token})
-    
 }
 const veryfyToken= async (req,res,next)=>{
     const cookies =req.headers.cookie.split('=').pop()

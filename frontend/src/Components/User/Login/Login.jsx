@@ -30,14 +30,15 @@ function Login() {
     const res = await axios.post('http://localhost:5000/login',{
          email:input.email,
          password:input.password
+    }).then((res)=>{
+      console.log("res :" ,res)
     })
-    
-    .catch((err)=>{
+  .catch((err)=>{
       console.log(err.message)
     })
-    console.log(res)
-    var data = res.data;
-    return data;
+    // console.log("res " ,res)
+    // var data = res.data;
+    // return data;
   }
   const handleSubmit =(e)=>{
       e.preventDefault()
