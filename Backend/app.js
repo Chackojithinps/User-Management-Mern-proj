@@ -8,7 +8,11 @@ const cors = require('cors')
 
 const app = express();
 app.use(cookieParser())
-app.use(cors({credentials:true,origin:"http://localhost:3000"}))
+app.use(cors({
+    origin:["http://localhost:3000"],
+    methods:['GET','POST'],
+    credentials:true
+  }))
 app.use(express.json())
 app.use('/',userRouter)
 // app.use('/admin',adminRouter)

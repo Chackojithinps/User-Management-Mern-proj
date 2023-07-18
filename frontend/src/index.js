@@ -6,14 +6,17 @@ import App from './App';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import Store from './Store/index';
 import {BrowserRouter as Router} from 'react-router-dom'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
 
-  <React.StrictMode>
+  <Provider store={Store}>
+
     <App />
-  </React.StrictMode>
+  </Provider>
   </Router>
 );
 

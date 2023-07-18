@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './Login.css'
+import {useDispatch} from 'react-redux'
 import {
   MDBBtn,
   MDBContainer,
@@ -13,7 +14,9 @@ import {
 from 'mdb-react-ui-kit';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { addUserDetails } from '../../../Store/UserAuth';
 function Login() {
+  const dispatch = useDispatch()
   const [input,setInput] = useState({
     email:"",
     password:""
@@ -30,12 +33,14 @@ function Login() {
     const res = await axios.post('http://localhost:5000/login',{
          email:input.email,
          password:input.password
-    }).then((res)=>{
-      console.log("res :" ,res)
+    },{ withCredentials: true }).then((res)=>{
+      console.log("res : ",res)
+      const result = res.data;
+      dispatch(addUserDetails({name:result.user.fname,token:result.token}))
     })
   .catch((err)=>{
       console.log(err.message)
-    })
+   })
     // console.log("res " ,res)
     // var data = res.data;
     // return data;
@@ -95,4 +100,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;

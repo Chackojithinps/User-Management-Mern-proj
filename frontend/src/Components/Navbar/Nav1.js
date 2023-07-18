@@ -2,8 +2,24 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { userLogout } from '../../Store/UserAuth';
+import { useCookies } from 'react-cookie';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 function Nav1() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const[cookie,setCookie,removeCookie]=useCookies(['jwt'])
+
+  const handleLogout = ()=>{
+      removeCookie('jwt')
+      dispatch(userLogout())
+      navigate('/')
+  }
+  const handleProfile=()=>{
+       navigate('/profile')
+  }
   return (
     <div>
        <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -15,8 +31,8 @@ function Nav1() {
          
         </Nav>
         <Nav>
-          <Nav.Link >Profile </Nav.Link>
-          <Nav.Link >
+          <Nav.Link onClick={handleProfile}>Profile </Nav.Link>
+          <Nav.Link onClick={handleLogout}>
              Logout
           </Nav.Link>
         </Nav>
