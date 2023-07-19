@@ -10,11 +10,6 @@ import {
     MDBBtn,
     MDBBreadcrumb,
     MDBBreadcrumbItem,
-    MDBProgress,
-    MDBProgressBar,
-    MDBIcon,
-    MDBListGroup,
-    MDBListGroupItem
   } from 'mdb-react-ui-kit';
 function Profile() {
     return (

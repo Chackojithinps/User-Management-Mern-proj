@@ -30,7 +30,7 @@ const UserRoute = () => {
             <Route path='/' element={userToken?<HomePage/>:<LoginPage/>}/>
             <Route path='/home' element={userToken?<HomePage/>:<LoginPage/>} />
             <Route path='/signup' element={<SignupPage/>} />
-            <Route path='/profile' element={<ProfilePage/>} />
+            <Route path='/profile' element={userToken?<ProfilePage/>:<LoginPage/>} />
         </Routes>
     </div>
   )
