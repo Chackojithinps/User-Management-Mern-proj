@@ -38,7 +38,7 @@ const userLogin = async (req,res)=>{
     let isUserExists;
     try {
          isUserExists = await User.findOne({email:email})
-         console.log(isUserExists)
+         console.log("isuserExist",isUserExists)
     } catch (error) {
         console.log(error.message)
     }

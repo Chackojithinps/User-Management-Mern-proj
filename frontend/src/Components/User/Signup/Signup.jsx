@@ -100,7 +100,7 @@ const Signup =()=>{
 
                       <div className="text-center">
         
-                        <p>already a user? <Link to="/login">Login</Link></p>
+                        <p>already a user? <Link to="/">Login</Link></p>
         
                         <MDBBtn tag='a' color='none' className='mx-3' style={{ color: '#1266f1' }}>
                           <MDBIcon fab icon='facebook-f' size="sm"/>
