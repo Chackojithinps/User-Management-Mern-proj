@@ -30,7 +30,7 @@ const Signup =()=>{
             // console.log(`${e.target.name} value ${e.target.value}`)
         }
         const sendReq = async()=>{
-            const res = await axios.post('http://localhost:5000/api/signup',{
+            const res = await axios.post('http://localhost:5000/signup',{
                 fname:input.fname,
                 lname:input.lname,
                 email:input.email,
@@ -46,7 +46,7 @@ const Signup =()=>{
              e.preventDefault();
              console.log("input : ",input)
             sendReq().then(()=>{
-                navigate('/login')
+                navigate('/')
             })
         }
         return (
