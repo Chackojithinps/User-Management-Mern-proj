@@ -114,4 +114,31 @@ const getUser = async(req,res)=>{
     console.log(error.message)
    }
 }
-module.exports = {userSignup,userLogin,veryfyToken,getUser}
+
+const getProfile =async(req,res)=>{
+    try {
+        const newToken = req.cookies.jwt.token;
+        // console.log("newToken:",newToken)
+        if(newToken){
+            let userId;
+            jwt.verify(newToken,JWT_SECRET_KEY,(err,encoded)=>{
+                if(err){
+                    return res.status(200).json({message:"token validation rejected"})
+                }
+                 userId = encoded.id
+                // console.log(encoded)
+            })
+            const UserDetails = await User.findOne({_id:userId})
+            // console.log(UserDetails)
+            if(UserDetails){
+                return res.status(200).json({UserDetails})
+            }
+            return res.status(401).json({message:"error"})
+        }else{
+            return res.status(401).json({message:"token is not valid"})
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+module.exports = {userSignup,userLogin,veryfyToken,getUser,getProfile}
