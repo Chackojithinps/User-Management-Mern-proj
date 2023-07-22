@@ -15,6 +15,7 @@ import axios from "axios";
 
 function Profile() {
   const [userData,setUserdata] = useState({})
+  const [image,setImage] = useState("")
   useEffect(() => {
     axios
       .get("http://localhost:5000/profile", {
@@ -26,7 +27,19 @@ function Profile() {
         setUserdata(res.data.UserDetails)
       });
   }, []);
-  console.log("userData1 : ", userData)
+  // console.log("userData1 : ", userData)
+
+  const onInputChange=(e)=>{
+    console.log(e.target.files[0])
+    setImage(e.target.files[0])
+  }
+
+  const handleUpload =(e)=>{
+     e.preventDefault()
+
+     const formData = new FormData();
+     formData.append("image",image)
+  }
   return (
     <section style={{ backgroundColor: "#eee" }}>
       <MDBContainer className="py-5">
@@ -51,7 +64,11 @@ function Profile() {
                 {/* <p className="text-muted mb-1">{userData.fname}</p> */}
                 <p className="text-muted mb-4">{userData.fname}</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn>Upload Photo</MDBBtn>
+                <form action="/profile" method="post" enctype="multipart/form-data">
+                  <input type="file" accept="image/*" name="avatar" onChange={onInputChange}/>
+                  <MDBBtn onClick={handleUpload}>Upload Photo</MDBBtn>
+                </form>
+                  
                   {/* <MDBBtn outline className="ms-1">
                     Message
                   </MDBBtn> */}
