@@ -4,6 +4,7 @@ const userRouter = require('./routes/user-router')
 const adminRouter = require('./routes/admin-router')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const path = require('path')
 
 
 const app = express();
@@ -13,8 +14,12 @@ app.use(cors({
     methods:['GET','POST'],
     credentials:true
   }))
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({extended:false}))
+
 app.use(express.json())
 app.use('/',userRouter)
+
 // app.use('/admin',adminRouter)
 mongoose.connect('mongodb+srv://jithinchackopayyanat:0UbEV9ZpyIYd96Ks@cluster0.jgzemu9.mongodb.net/User-management?retryWrites=true&w=majority').then((res)=>{
     app.listen(5000);

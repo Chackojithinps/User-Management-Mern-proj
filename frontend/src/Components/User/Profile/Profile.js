@@ -16,6 +16,7 @@ import axios from "axios";
 function Profile() {
   const [userData,setUserdata] = useState({})
   const [image,setImage] = useState("")
+  const [url,setUrl] = useState(true)
   useEffect(() => {
     axios
       .get("http://localhost:5000/profile", {
@@ -26,19 +27,28 @@ function Profile() {
         console.log("userData : ", res.data.UserDetails)
         setUserdata(res.data.UserDetails)
       });
-  }, []);
+  }, [url]);
   // console.log("userData1 : ", userData)
 
   const onInputChange=(e)=>{
     console.log(e.target.files[0])
     setImage(e.target.files[0])
   }
-
-  const handleUpload =(e)=>{
-     e.preventDefault()
+  
+  const handleUpload =async (e)=>{
+     e.preventDefault();
 
      const formData = new FormData();
      formData.append("image",image)
+
+     const res = await axios.post("http://localhost:5000/profile-image",formData,{
+        headers:{"Content-Type":"multipart/form-data"},
+     
+      withCredentials:true
+     }).then((res)=>{
+      console.log("res.dattta:",res.data)
+        setUrl(res.data.url)
+     })
   }
   return (
     <section style={{ backgroundColor: "#eee" }}>
@@ -55,7 +65,7 @@ function Profile() {
             <MDBCard className="mb-4">
               <MDBCardBody className="text-center">
                 <MDBCardImage
-                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                  src={url?`/Backend/public/profileImages/Screenshot 2023-07-01 113537.png`:"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: "150px" }}

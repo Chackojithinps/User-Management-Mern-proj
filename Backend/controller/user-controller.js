@@ -1,6 +1,7 @@
 const User = require('../model/user-model')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { set } = require('mongoose');
 const JWT_SECRET_KEY = "MyKey";
 
 const userSignup = async(req,res,next) =>{
@@ -141,4 +142,31 @@ const getProfile =async(req,res)=>{
         console.log(error.message)
     }
 }
-module.exports = {userSignup,userLogin,veryfyToken,getUser,getProfile}
+
+const getProfileImage =async (req,res)=>{
+      try {
+        console.log("hello")
+         const token1 = req.cookies.jwt.token
+         console.log("token : ",token1)
+         let userId;
+         if(token1){
+             jwt.verify(token1,JWT_SECRET_KEY,(err,encoded)=>{
+                if(err){
+                    console.log("error : ",err.message)
+                }
+                userId = encoded.id
+             })
+         }
+         const userData =await User.findOne({_id:userId})
+         if(req.file&&req.file.path){
+            userData.image=req.file.filename;
+            const url =req.file.path;
+            await userData.save()
+            console.log("success")
+            res.status(200).send({success:true,url,message:"success"})
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+}
+module.exports = {userSignup,userLogin,veryfyToken,getUser,getProfile,getProfileImage}
